@@ -109,13 +109,13 @@ def run():
     
 
     st.set_page_config(
-        page_title="Hello",
+        page_title="Intro of deep learning for Visium data",
         page_icon="👋",
     )
 
-    st.write("# Welcome to Streamlit! 👋")
+    st.write("# Intro of the single cell and Visium data👋")
 
-    st.sidebar.success("Select a demo above.")
+    st.sidebar.success("Select a page above.")
 
     st.markdown(
         """
