@@ -117,7 +117,7 @@ def simulate_tangram_prediction_groundtruth(
 
 def data_frame_demo():
 
-    progress_bar = st.sidebar.progress(0)
+    # progress_bar = st.sidebar.progress(0)
     status_text = st.sidebar.empty()
 
     
@@ -153,7 +153,7 @@ def data_frame_demo():
     for _ in range(max_iterations):
         
         # new_rows = last_rows[-1, :] + np.random.randn(1, 1).cumsum(axis=0)
-        status_text.text("%i%% Complete" % _)
+        # status_text.text("%i%% Complete" % _)
 
 
         M_matrix = np.array([[params_gradients['a'], 
@@ -255,7 +255,7 @@ def data_frame_demo():
         
         add_df = pd.DataFrame(np.array([[a,b,c,a_g,b_g,c_g,c_s]]), columns=["A", "B", "C", "Gradient_A", "Gradient_B", "Gradient_C", 'Cosine similarity'])
         my_data_element.add_rows(add_df)  # Correctly using add_rows on a dataframe element
-        progress_bar.progress(_)
+        # progress_bar.progress(_)
         # last_rows = new_rows
         time.sleep(0.05)
     data = pd.DataFrame([[
@@ -293,7 +293,7 @@ def data_frame_demo():
                                             #  "A", "B", "C", 
                                              "Gradient_A", "Gradient_B", "Gradient_C", 'Cosine similarity'])
         my_data_element.add_rows(add_df)  # Correctly using add_rows on a dataframe element
-        progress_bar.progress(_)
+        # progress_bar.progress(_)
         # last_rows = new_rows
         time.sleep(0.05)
         
