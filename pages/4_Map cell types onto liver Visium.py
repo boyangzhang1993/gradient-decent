@@ -28,7 +28,7 @@ def animation_demo() -> None:
     components.html(html_content_gene_set_2, width=700, height=400)
 
 
-st.set_page_config(page_title="Animation Demo", page_icon="📹")
+st.set_page_config(page_title="Liver spatial cell types", page_icon="📹")
 st.markdown("# Animation Demo")
 st.sidebar.header("Animation Demo")
 st.write(
