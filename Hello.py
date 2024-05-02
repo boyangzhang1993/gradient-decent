@@ -36,22 +36,6 @@ def cosine_similarity_matrix_formal(X:List[float], Y:List[float]) -> np.ndarray:
     y_norm = np.sqrt(np.sum(y**2, axis=1, keepdims=True))
     return np.dot(x, y.T) / (x_norm * y_norm)
 
-# def plot_function(f, x_range, current_x):
-#     x = np.linspace(x_range[0], x_range[1], 400)
-#     y = eval(f)
-#     plt.figure(figsize=(10, 5))
-#     plt.plot(x, y, label=f'f(x) = {f}')
-#     plt.scatter([current_x], [eval(f.replace('x', f'({current_x})'))], color='red')  # Plot current point
-#     plt.title("Function Graph")
-#     plt.xlabel("x")
-#     plt.ylabel("f(x)")
-#     plt.legend()
-#     plt.grid(True)
-#     plt.close()
-#     return plt
-
-
-
 
 single_cell_df = pd.DataFrame({
     'gene_1': [1, 0, 0],
@@ -109,29 +93,69 @@ def run():
     
 
     st.set_page_config(
-        page_title="Intro of deep learning for Visium data",
+        page_title="Intro of Deep Learning for Visium Data",
         page_icon="👋",
     )
 
-    st.write("# Intro of the single cell and Visium data👋")
+    st.write("# Intro of Deep Learning for Visium Data👋")
 
     st.sidebar.success("Select a page above.")
+    st.caption('Author: Boyang Zhang from Stanly Ng lab at UCI')
 
     st.markdown(
         """
-        Streamlit is an open-source app framework built specifically for
-        Machine Learning and Data Science projects.
-        **👈 Select a demo from the sidebar** to see some examples
-        of what Streamlit can do!
+       
+        
+        Single-cell RNA and Visium data are two types of datasets used in the field of genomics, specifically in the study of biological tissues at a high resolution. Here's a brief introduction:
     """
     )
-    st.subheader('This is the Single Cell Data')
+    
+    st.subheader('Single Cell RNA Data')
+
+    # st.image('./sc_1.png')
+    # st.caption('Adapt from Ramachandran, P., Matchett, K.P., Dobie, R. et al. https://doi.org/10.1038/s41575-020-0304-x')
+    
+    if 'show_image' not in st.session_state:
+        st.session_state.show_image = False
+
+    # Button to toggle the image display state
+    if st.button('Show Single Cell Backgrounds'):
+        # Toggle the state
+        st.session_state.show_image = not st.session_state.show_image
+
+    # If the state is True, display the image and caption
+    if st.session_state.show_image:
+        st.image('./sc_1.png')
+        st.caption('Adapted from Ramachandran, P., Matchett, K.P., Dobie, R. et al. https://doi.org/10.1038/s41575-020-0304-x')
+
+    st.subheader('This is a Simulated Single Cell RNA Data')
     st.dataframe(data=single_cell_df)
 
     ## 
+    # show_temporary_image(url = 'https://cdn.10xgenomics.com/image/upload/f_auto,q_auto,w_680,h_510,c_limit/v1574196658/blog/singlecell-v.-bulk-image.png')
+
     matrix_groundtruth, simulate_spatial_data = simulate_tangram_prediction_groundtruth(classic_example=True,
                                                                                         size_spot=1,)
-    st.subheader('This is the Simulated Visium Data')
+    st.subheader('Spatial Transcriptomics (Visium)')
+
+    # st.image('./visium_1.png')
+    # st.caption('image from http://research.libd.org/VistoSeg/')
+    
+    if 'show_image_2' not in st.session_state:
+        st.session_state.show_image_2 = False
+
+    # Button to toggle the image display state
+    if st.button('Show Visium Backgrounds'):
+        # Toggle the state
+        st.session_state.show_image_2 = not st.session_state.show_image_2
+
+    # If the state is True, display the image and caption
+    if st.session_state.show_image_2:
+        st.image('./visium_1.png')
+        st.caption('image from http://research.libd.org/VistoSeg/')
+    
+    
+    st.subheader('This is a Simulated Visium Data')
     
     if st.button('Show/Hide Grouth Truth'):
         # Toggle the state
@@ -146,7 +170,12 @@ def run():
     st.write("So we use ground truth to simulate a Visium data")
     st.dataframe(data=simulate_spatial_data)
     # Prediction
-    st.subheader('This is a Prediction we are using', divider='rainbow')
+    st.subheader('Integrating Single Cell and Visium Spatial Gene Expression Data', divider='rainbow')
+    st.markdown("""From **single cell RNA** we can infer :red[cell types] but no :blue[spatial] context.  
+                   From **Visium**, we can infer :red[spatial] info but no :blue[cell types].  
+                   Can we **integrate** single cell and Visium to infer the :green[spatiality of cell types]?""")
+    st.image('visium_2.png')
+    st.subheader('This is the Prediction We are Using',)
     
     a = st.slider('Select value for a', min_value=-100, max_value=100, value=1)
     b = st.slider('Select value for b', min_value=-100, max_value=100, value=10)
@@ -186,15 +215,17 @@ def run():
     cosine_init = cosine_similarity_matrix_formal(prediction_genes, simulate_spatial_data)
     
     
-    if cosine_init > 0.9:
+    if cosine_init > 0.92:
         st.success(f'Match found ! Similarity is {cosine_init[0][0]}')
         st.toast('You did good job on Prediction!', icon='🎉')
         # mycode = "<a href='https://imgflip.com/i/8oo1fb'><img src='https://i.imgflip.com/8oo1fb.jpg' /></a><div><a href='https://imgflip.com/memegenerator'>from Imgflip Meme Generator</a></div>"
         # components.html(mycode, height=0, width=0)
         st.balloons()
+        time.sleep(3)
+        st.image('./success_1.png')
 
         # show_image_in_expander()
-        show_temporary_image()
+        # show_temporary_image()
     elif cosine_init > 0.5:
         st.info(f'Ok, try it again ! Similarity is {cosine_init[0][0]}')
         # st.snow()

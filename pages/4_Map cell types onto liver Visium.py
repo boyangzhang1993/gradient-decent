@@ -29,8 +29,8 @@ def animation_demo() -> None:
 
 
 st.set_page_config(page_title="Liver spatial cell types", page_icon="📹")
-st.markdown("# Animation Demo")
-st.sidebar.header("Animation Demo")
+st.markdown("# Liver spatial cell types")
+st.sidebar.header("Liver spatial cell types")
 st.write(
     """This app shows how you can use Streamlit to build cool animations.
 It displays an animated fractal based on the the Julia Set. Use the slider
