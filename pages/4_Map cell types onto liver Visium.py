@@ -31,11 +31,28 @@ def animation_demo() -> None:
 st.set_page_config(page_title="Liver spatial cell types", page_icon="📹")
 st.markdown("# Liver spatial cell types")
 st.sidebar.header("Liver spatial cell types")
-st.write(
-    """This app shows how you can use Streamlit to build cool animations.
-It displays an animated fractal based on the the Julia Set. Use the slider
-to tune different parameters."""
-)
+
+if 'show_image_2' not in st.session_state:
+    st.session_state.show_image_2 = False
+
+# Button to toggle the image display state
+if st.button('Show Backgrounds'):
+    # Toggle the state
+    st.session_state.show_image_2 = not st.session_state.show_image_2
+
+# If the state is True, display the image and caption
+if st.session_state.show_image_2:
+    st.write(
+        """Why liver study should conside :green[spatial cell types]?   
+        A liver lobule is the basic structural unit of the liver.   
+        It consists of plates of hepatocytes (liver cells) radiating out from a central vein.   
+        The periphery of each lobule contains portal triads, which consist of a portal vein, a hepatic artery, and a bile duct.  
+        Blood flows into the lobules through the portal vein and hepatic artery, filters through the hepatocytes where nutrients are absorbed and toxins are metabolized, and then collects in the central vein to be transported back into general circulation.  
+
+    """
+    )
+    st.image('./liver_1.png')
+    st.caption('Image from https://www.frontiersin.org/articles/10.3389/fbioe.2022.845360/full')
 
 animation_demo()
 
